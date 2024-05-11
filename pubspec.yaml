@@ -7,6 +7,12 @@ environment:
   sdk: '>=3.3.4 <4.0.0'
 
 dependencies:
+  bloc:
+  flutter_bloc:
+  firebase_core: ^2.30.1
+  firebase_auth:
+  cloud_firestore:
+  firebase_storage:
   flutter:
     sdk: flutter
 

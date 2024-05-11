@@ -4,6 +4,7 @@ class PlaneDetails extends StatefulWidget {
   final String name;
   final String image;
   final String details;
+  final List<String> schedule;
 
   // ignore: use_super_parameters
   const PlaneDetails({
@@ -11,14 +12,14 @@ class PlaneDetails extends StatefulWidget {
     required this.name,
     required this.image,
     required this.details,
+    required this.schedule,
   }) : super(key: key);
 
   @override
   State<PlaneDetails> createState() => _PlaneDetailsState();
 }
 
-class _PlaneDetailsState extends State<PlaneDetails>
-    with SingleTickerProviderStateMixin {
+class _PlaneDetailsState extends State<PlaneDetails> with SingleTickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -56,10 +57,14 @@ class _PlaneDetailsState extends State<PlaneDetails>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
+          Image.network(
             widget.image,
             width: double.infinity,
             fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => const Icon(
+              Icons.error,
+              color: Colors.red,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
@@ -126,62 +131,23 @@ class _PlaneDetailsState extends State<PlaneDetails>
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Week 1",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold)),
-                      Text("learn your optimal protein",
-                          style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold)),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Text("Week 1",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold)),
-                      Text("learn your optimal protein",
-                          style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold)),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Text("Week 1",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold)),
-                      Text("learn your optimal protein",
-                          style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold)),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Text("Week 1",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold)),
-                      Text("learn your optimal protein",
-                          style: TextStyle(
-                              color: Colors.white.withOpacity(0.5),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold)),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                    ],
+                  child: ListView.separated(
+                    itemCount: widget.schedule.length,
+                    itemBuilder: (context, index) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Week ${index + 1}",
+                            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                        Text(widget.schedule[index],
+                            style: TextStyle(
+                                color: Colors.white.withOpacity(0.5),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 12,
+                    ),
                   ),
                 ),
               ],
